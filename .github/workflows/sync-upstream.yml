@@ -27,9 +27,9 @@ jobs:
           cd fork
           git remote add upstream https://github.com/Alvin9999/pac2
           git fetch upstream
-          git checkout main  # Change this if your default branch is different
-          git merge upstream/main  # Merge changes from upstream
-          git push origin main  # Push changes to your fork
+          git checkout master  # Change this to 'master' if that's your default branch
+          git merge upstream/master  # Merge changes from upstream
+          git push origin master  # Push changes to your fork
 
       - name: Clean up
         run: |
