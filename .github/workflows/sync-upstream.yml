@@ -1,0 +1,37 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # This will run the workflow every hour
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          repository: Alvin9999/pac2  # The upstream repository
+          path: upstream  # Path to checkout the upstream repo
+
+      - name: Checkout fork
+        uses: actions/checkout@v2
+        with:
+          path: fork  # Path to checkout your forked repo
+          persist-credentials: false  # Prevents using the default GitHub token
+
+      - name: Sync upstream
+        run: |
+          cd fork
+          git remote add upstream https://github.com/Alvin9999/pac2
+          git fetch upstream
+          git checkout main  # Change this if your default branch is different
+          git merge upstream/main  # Merge changes from upstream
+          git push origin main  # Push changes to your fork
+
+      - name: Clean up
+        run: |
+          rm -rf upstream
+          rm -rf fork
