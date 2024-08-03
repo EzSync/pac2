@@ -1,4 +1,4 @@
-name: Sync from Upstream
+name: Sync from Upstream (Git)
 
 on:
   push: { branches: [ master ] }  # Trigger on push to master branch
@@ -10,8 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3  # Checkout the current repository
-      - uses: repo-sync/github-sync@v2
-        with:
-          source_repo: https://github.com/Alvin9999/pac2  # Source (upstream) repo URL
-          source_branch: master  # Branch to sync from in the source repo
-          destination_branch: master  # Branch to sync to in your repo
+      - name: Fetch updates from upstream
+        run: git fetch origin
+      - name: Check for changes 
+        run: |
+          upstream_sha=$(git rev-parse origin/master)
+          current_sha=$(git rev-parse HEAD)
+          if [[ $upstream_sha != $current_sha ]]; then
+            echo "Upstream has updates. Merging..."
+            git merge origin/master
+          else
+            echo "Upstream is up-to-date."
+          fi
