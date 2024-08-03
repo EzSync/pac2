@@ -1,0 +1,17 @@
+name: Sync from Upstream
+
+on:
+  push: { branches: [ master ] }  # Trigger on push to master branch
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight (adjust cron schedule as needed)
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3  # Checkout the current repository
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: https://github.com/Alvin9999/pac2  # Source (upstream) repo URL
+          source_branch: master  # Branch to sync from in the source repo
+          destination_branch: master  # Branch to sync to in your repo
