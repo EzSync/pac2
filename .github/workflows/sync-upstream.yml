@@ -27,9 +27,15 @@ jobs:
           cd fork
           git remote add upstream https://github.com/Alvin9999/pac2
           git fetch upstream
-          git checkout master  # Change this to 'master' if that's your default branch
-          git merge upstream/master  # Merge changes from upstream
-          git push origin master  # Push changes to your fork
+          # Check if the master branch exists
+          if git show-ref --verify --quiet refs/heads/master; then
+            git checkout master  # Checkout master if it exists
+            git merge upstream/master --allow-unrelated-histories  # Merge changes from upstream
+            git push origin master  # Push changes to your fork
+          else
+            echo "Branch 'master' does not exist in the fork."
+            exit 1  # Exit with an error if the branch does not exist
+          fi
 
       - name: Clean up
         run: |
