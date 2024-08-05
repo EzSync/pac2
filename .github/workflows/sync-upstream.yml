@@ -25,5 +25,9 @@ jobs:
 
       - name: Merge upstream changes
         run: |
-          git merge upstream/master --allow-unrelated-histories  # Allow merging unrelated histories
+          if ! git merge upstream/master --allow-unrelated-histories; then
+            echo "Merge conflict occurred. Aborting merge."
+            git merge --abort
+            exit 1
+          fi
           git push origin master  # Push changes to 'master'
