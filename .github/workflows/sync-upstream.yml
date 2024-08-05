@@ -4,6 +4,7 @@ on:
   repository_dispatch:
     types: [update-from-upstream]
   workflow_dispatch:
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -16,5 +17,5 @@ jobs:
         run: |
           git remote add upstream https://github.com/Alvin9999/pac2
           git fetch upstream
-          git merge upstream/master  # Use 'master' as the default branch
+          git merge upstream/master --allow-unrelated-histories  # Allow merging unrelated histories
           git push origin master  # Push changes to 'master'
