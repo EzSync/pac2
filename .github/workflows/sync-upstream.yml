@@ -1,24 +1,25 @@
-name: Sync from Upstream (Git)
+name: Sync Upstream Repository
 
 on:
-  push: { branches: [ master ] }  # Trigger on push to master branch
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight (adjust cron schedule as needed)
+    - cron: '0 * * * *'  # Run the workflow every hour
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3  # Checkout the current repository
-      - name: Fetch updates from upstream
-        run: git fetch origin
-      - name: Check for changes 
-        run: |
-          upstream_sha=$(git rev-parse origin/master)
-          current_sha=$(git rev-parse HEAD)
-          if [[ $upstream_sha != $current_sha ]]; then
-            echo "Upstream has updates. Merging..."
-            git merge origin/master
-          else
-            echo "Upstream is up-to-date."
-          fi
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        
+    - name: Sync with upstream
+      run: |
+        git remote add upstream https://github.com/Alvin9999/pac2.git
+        git fetch upstream
+        git checkout master
+        git merge upstream/master
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
