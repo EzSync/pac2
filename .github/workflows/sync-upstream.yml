@@ -17,5 +17,13 @@ jobs:
         run: |
           git remote add upstream https://github.com/Alvin9999/pac2
           git fetch upstream
+          
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Merge upstream changes
+        run: |
           git merge upstream/master --allow-unrelated-histories  # Allow merging unrelated histories
           git push origin master  # Push changes to 'master'
