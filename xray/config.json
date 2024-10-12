@@ -26,7 +26,7 @@
     },
     {
       "tag": "http",
-      "port": 1081,
+      "port": 10809,
       "listen": "127.0.0.1",
       "protocol": "http",
       "sniffing": {
@@ -51,11 +51,11 @@
       "settings": {
         "vnext": [
           {
-            "address": "104.19.143.111",
-            "port": 2082,
+            "address": "104.21.238.39",
+            "port": 2086,
             "users": [
               {
-                "id": "86e926b9-d67a-4c8f-a35e-024631838a45",
+                "id": "ee420fda-efb7-48a8-9249-8987e36ebd9e",
                 "alterId": 0,
                 "email": "t@t.tt",
                 "security": "auto"
@@ -69,7 +69,7 @@
         "wsSettings": {
           "path": "github.com/Alvin9999",
           "headers": {
-            "Host": "xray2.2413762.xyz"
+            "Host": "ip9.9447609.xyz"
           }
         }
       },
@@ -100,7 +100,7 @@
     },
     "servers": [
       {
-        "address": "1.1.1.1",
+        "address": "223.5.5.5",
         "domains": [
           "geosite:cn",
           "geosite:geolocation-cn"
@@ -115,8 +115,7 @@
     ]
   },
   "routing": {
-    "domainStrategy": "IPOnDemand",
-    "domainMatcher": "mph",
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -124,6 +123,12 @@
           "api"
         ],
         "outboundTag": "api"
+      },
+      {
+        "type": "field",
+        "port": "443",
+        "network": "udp",
+        "outboundTag": "block"
       },
       {
         "type": "field",
